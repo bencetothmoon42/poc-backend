@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model House {
+  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name String @unique
+}
+
+model Destination {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  houseId     String    @map("house_id")
+  name        String    @unique
+  description String
+  enabled     Boolean   @default(false)
+  location    String
+  printers    Printer[]
+}
+
+model Printer {
+  id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String       @unique
+  description   String
+  enabled       Boolean      @default(false)
+  activePaperId Int          @map("active_paper_id")
+  dataFormat    String       @map("data_format")
+  location      String
+  model         String
+  serialNumber  String
+  comment       String
+  destinationId String?      @db.Uuid
+  destination   Destination? @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+}
