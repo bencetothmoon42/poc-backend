@@ -35,6 +35,17 @@ CREATE TABLE "Printer" (
     CONSTRAINT "Printer_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "PrintingJob" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "status" BOOLEAN NOT NULL DEFAULT false,
+    "time_started" TEXT NOT NULL,
+    "paper_type" TEXT NOT NULL,
+    "counter" TEXT NOT NULL,
+
+    CONSTRAINT "PrintingJob_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "House_name_key" ON "House"("name");
 

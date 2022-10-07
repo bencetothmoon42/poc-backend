@@ -10,7 +10,7 @@ export class DestinationService {
     private readonly destinationConverter: DestinationConverter,
   ) {}
 
-  async getAllDestinations(): Promise<DestinationDto[]> {
+  async getAllDestination(): Promise<DestinationDto[]> {
     const destinations = await this.database.destination.findMany();
     return destinations.map((destination) =>
       this.destinationConverter.toDestinationDto(destination),

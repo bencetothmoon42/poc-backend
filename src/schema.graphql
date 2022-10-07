@@ -30,8 +30,17 @@ type DestinationDto {
   location: String!
 }
 
+type PrintingJobDto {
+  id: ID!
+  status: Boolean!
+  timeStarted: String!
+  paperType: String!
+  counter: String!
+}
+
 type Query {
   getAllHouse: [HouseDto!]!
   getAllDestination: [DestinationDto!]!
   getAllPrinter: [PrinterDto!]!
+  getAllPrintingJob: [PrintingJobDto!]!
 }

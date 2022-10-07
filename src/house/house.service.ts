@@ -10,7 +10,7 @@ export class HouseService {
     private readonly houseConverter: HouseConverter,
   ) {}
 
-  async getAllHouses(): Promise<HouseDto[]> {
+  async getAllHouse(): Promise<HouseDto[]> {
     const houses = await this.database.house.findMany();
     return houses.map((house) => this.houseConverter.toHouseDto(house));
   }

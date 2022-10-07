@@ -12,6 +12,6 @@ export class HouseResolver {
 
   @Query(() => [HouseDto])
   async getAllHouse(): Promise<HouseDto[]> {
-    return await this.houseService.getAllHouses();
+    return await this.houseService.getAllHouse();
   }
 }

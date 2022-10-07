@@ -36,3 +36,11 @@ model Printer {
   destinationId String?      @db.Uuid
   destination   Destination? @relation(fields: [destinationId], references: [id], onDelete: Cascade)
 }
+
+model PrintingJob {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  status      Boolean @default(false)
+  timeStarted String  @map("time_started")
+  paperType   String  @map("paper_type")
+  counter     String
+}

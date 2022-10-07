@@ -12,6 +12,6 @@ export class PrinterResolver {
 
   @Query(() => [PrinterDto])
   async getAllPrinter(): Promise<PrinterDto[]> {
-    return await this.printerService.getAllPrinters();
+    return await this.printerService.getAllPrinter();
   }
 }

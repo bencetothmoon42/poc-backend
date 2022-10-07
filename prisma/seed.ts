@@ -9,12 +9,14 @@ async function main() {
     await prisma.printer.deleteMany();
     await prisma.destination.deleteMany();
     await prisma.house.deleteMany();
+    await prisma.printingJob.deleteMany();
 
     console.log(`Start seeding ...`);
 
     await createHouses();
     await createDestinations();
     await createPrinters();
+    await createPrintingJobs();
 
     console.log(`Seeding finished.`);
   } catch (e) {
@@ -66,6 +68,19 @@ async function createPrinters() {
         comment: '',
         // destinationId:
         // destination: ""
+      },
+    });
+  }
+}
+
+async function createPrintingJobs() {
+  for (let index = 0; index < 200; index++) {
+    await prisma.printingJob.create({
+      data: {
+        status: index % 2 === 0,
+        counter: `counter-${index}`,
+        paperType: `papertype-${index}`,
+        timeStarted: '2022.10.17',
       },
     });
   }

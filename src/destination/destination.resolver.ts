@@ -12,6 +12,6 @@ export class DestinationResolver {
 
   @Query(() => [DestinationDto])
   async getAllDestination(): Promise<DestinationDto[]> {
-    return await this.destinationService.getAllDestinations();
+    return await this.destinationService.getAllDestination();
   }
 }
