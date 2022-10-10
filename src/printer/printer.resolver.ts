@@ -9,13 +9,6 @@ import { OnEvent } from '@nestjs/event-emitter';
 import { MockKafkaService } from 'src/mock/kafka.service';
 
 
-//REMOVEME?
-let randomth = function (arr) {
-	if(!arr) return "foo";
-  return arr[Math.floor((Math.random()*arr.length))];
-}
-
-
 @Resolver('Printer')
 export class PrinterResolver {
 
