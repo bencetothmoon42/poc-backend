@@ -3,6 +3,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { PrinterDto } from './dto/printer.dto';
 import { PrinterConverter } from './printer.converter';
 
+
 @Injectable()
 export class PrinterService {
   constructor(
