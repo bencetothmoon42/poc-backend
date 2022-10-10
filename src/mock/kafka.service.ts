@@ -1,6 +1,8 @@
 import { Logger, Injectable, OnModuleInit, INestApplication } from '@nestjs/common';
 import { OnEvent, EventEmitter2 } from '@nestjs/event-emitter';
 
+import *  as crypto from  'crypto';
+
 @Injectable()
 export class MockKafkaService {
 
@@ -23,7 +25,7 @@ export class MockKafkaService {
 	async *printerStatus(): AsyncGenerator<{id:string, status:string}, never>{
 		while(true){
 			await new Promise(resolve => setTimeout(resolve, 1000));
-			yield {id: "1", status: 'ok'};
+			yield {id: crypto.randomUUID(), status: 'ok'};
 		}
 	}
 
