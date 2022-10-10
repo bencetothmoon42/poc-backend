@@ -29,7 +29,7 @@ export class MockKafkaService {
 
 	async run(){
 		for await (let status of this.printerStatus()) {
-			this.logger.log("produced "+status);
+			this.logger.log(`produced ${JSON.stringify(status)}`);
 			this.consume(status);
 		};
 	}
