@@ -1,11 +1,14 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { HelloModule } from './hello/hello.module';
+import { DatabaseModule } from './database/database.module';
+import { PrinterModule } from './printer/printer.module';
+import { HouseModule } from './house/house.module';
+import { DestinationModule } from './destination/destination.module';
+import { PrintingJobModule } from './printing-job/printing-job.module';
 
 @Module({
   imports: [
-    HelloModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       useFactory: () => {
@@ -14,6 +17,11 @@ import { HelloModule } from './hello/hello.module';
         };
       },
     }),
+    DatabaseModule,
+    HouseModule,
+    DestinationModule,
+    PrinterModule,
+    PrintingJobModule,
   ],
 })
 export class AppModule {}

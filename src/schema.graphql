@@ -2,11 +2,45 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Hello {
-  hello: String!
-  resolvedHello: String!
+type PrinterDto {
+  id: ID!
+  name: String!
+  description: String!
+  enabled: Boolean!
+  activePaperId: Float!
+  dataFormat: String!
+  location: String!
+  model: String!
+  serialNumber: String!
+  comment: String!
+  destinationId: String
+}
+
+type HouseDto {
+  id: ID!
+  name: String!
+}
+
+type DestinationDto {
+  id: ID!
+  houseId: String!
+  name: String!
+  description: String!
+  enabled: Boolean!
+  location: String!
+}
+
+type PrintingJobDto {
+  id: ID!
+  status: Boolean!
+  timeStarted: String!
+  paperType: String!
+  counter: String!
 }
 
 type Query {
-  getHello: Hello!
+  getAllHouse: [HouseDto!]!
+  getAllDestination: [DestinationDto!]!
+  getAllPrinter: [PrinterDto!]!
+  getAllPrintingJob: [PrintingJobDto!]!
 }
