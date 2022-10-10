@@ -16,6 +16,11 @@ type PrinterDto {
   destinationId: String
 }
 
+type PrinterStatusDto {
+  id: ID
+  status: String
+}
+
 type HouseDto {
   id: ID!
   name: String!
@@ -34,4 +39,8 @@ type Query {
   getAllHouse: [HouseDto!]!
   getAllDestination: [DestinationDto!]!
   getAllPrinter: [PrinterDto!]!
+}
+
+type Subscription {
+  statusUpdate: PrinterStatusDto!
 }
