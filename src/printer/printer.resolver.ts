@@ -4,9 +4,11 @@ import { PrinterDto } from './dto/printer.dto';
 import { PrinterStatusDto } from './dto/printerStatus.dto';
 import { PrinterService } from './printer.service';
 import { PubSub } from 'graphql-subscriptions';
+
+import { MockKafkaSink } from '../mock/kafka';
 //XXX ugly
 const pubSub = new PubSub();
-let samplePrinters = null; //for testing
+let samplePrinters = []; //for testing
 
 //REMOVEME?
 let randomth = function (arr) {
@@ -30,20 +32,18 @@ export class PrinterResolver {
 	 }
 
 	@Subscription(() => PrinterStatusDto ,{resolve: payload => payload}) //FIXME: proper type? why resolve
-	async statusUpdate() : AsyncInterator<PrinterStatusDto>{
+	async statusUpdate() : AsyncIterator<PrinterStatusDto>{
 		return pubSub.asyncIterator('statusUpdate');
 	}
 
 
 
 }
-
 //REMOVEME: infinite event generator for testing 
 async function* printerStatus(): AsyncGenerator<any, never>{
 	while(true){
 		await new Promise(resolve => setTimeout(resolve, 1000));
 		yield {id: randomth(samplePrinters), status: 'ok'};
-		//yield "ok";
 	}
 }
 //REMOVEME: ugly testing shit
