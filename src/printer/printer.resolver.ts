@@ -4,11 +4,10 @@ import { PrinterDto } from './dto/printer.dto';
 import { PrinterStatusDto } from './dto/printerStatus.dto';
 import { PrinterService } from './printer.service';
 import { PubSub } from 'graphql-subscriptions';
+import { OnEvent } from '@nestjs/event-emitter';
 
-import { MockKafkaSink } from '../mock/kafka';
-//XXX ugly
-const pubSub = new PubSub();
-let samplePrinters = []; //for testing
+import { MockKafkaService } from 'src/mock/kafka.service';
+
 
 //REMOVEME?
 let randomth = function (arr) {
@@ -19,41 +18,28 @@ let randomth = function (arr) {
 
 @Resolver('Printer')
 export class PrinterResolver {
-  constructor(
-    @Inject(PrinterService)
-    private readonly printerService: PrinterService,
-  ) {}
+
+	private pubSub = new PubSub();
+	
+	constructor(
+		@Inject(PrinterService)
+		private readonly printerService: PrinterService,
+	) {}
+
+	@OnEvent('message.rcvd')
+	handleStatusUpdate(status){
+		this.pubSub.publish('statusUpdate', status);
+	}
 
 	@Query(() => [PrinterDto])
-	 async getAllPrinter(): Promise<PrinterDto[]> {
-		 let printers =  await this.printerService.getAllPrinters();
-		 if(!samplePrinters) samplePrinters = printers.map(x => x.id);
-		 return printers;
-	 }
+	async getAllPrinter(): Promise<PrinterDto[]> {
+		let printers =  await this.printerService.getAllPrinters();
+		return printers;
+	}
 
 	@Subscription(() => PrinterStatusDto ,{resolve: payload => payload}) //FIXME: proper type? why resolve
-	async statusUpdate() : AsyncIterator<PrinterStatusDto>{
-		return pubSub.asyncIterator('statusUpdate');
+	async statusUpdate() : Promise<AsyncIterator<PrinterStatusDto>>{
+		return this.pubSub.asyncIterator('statusUpdate');
 	}
 
-
-
 }
-//REMOVEME: infinite event generator for testing 
-async function* printerStatus(): AsyncGenerator<any, never>{
-	while(true){
-		await new Promise(resolve => setTimeout(resolve, 1000));
-		yield {id: randomth(samplePrinters), status: 'ok'};
-	}
-}
-//REMOVEME: ugly testing shit
-(async ()=>{
-	for await (let status of printerStatus()) {
-		console.log("remove me later :) "+status);
-		pubSub.publish('statusUpdate', status);
-	};
-})();
-
-
-
-

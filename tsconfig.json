@@ -9,7 +9,8 @@
       "target": "es6",
 	  "lib": [
 		  "es6",
-		   "esnext.asynciterable"
+		  "esnext.asynciterable",
+		   "dom", "dom.iterable"
 	  ],
     "sourceMap": true,
     "outDir": "./dist",
