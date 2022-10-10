@@ -29,8 +29,8 @@ export class PrinterResolver {
 		 return printers;
 	 }
 
-	@Subscription(() => PrinterStatusDto,  {resolve: payload => payload}) //FIXME: proper type? why resolve
-	async statusUpdate() {
+	@Subscription(() => PrinterStatusDto ,{resolve: payload => payload}) //FIXME: proper type? why resolve
+	async statusUpdate() : AsyncInterator<PrinterStatusDto>{
 		return pubSub.asyncIterator('statusUpdate');
 	}
 
