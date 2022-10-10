@@ -42,9 +42,5 @@ export class MockKafkaService {
 
 
 
-//REMOVEME: infinite event generator for testing 
-//REMOVEME: ugly testing shit
-
-
 
 
