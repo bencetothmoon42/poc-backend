@@ -26,7 +26,7 @@ export class MockKafkaService {
 
   async *printerStatus(): AsyncGenerator<PrinterStatus, void> {
     while (this.running) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 10000));
       yield { id: crypto.randomUUID(), status: 'ok' };
     }
   }

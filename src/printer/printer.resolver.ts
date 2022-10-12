@@ -4,7 +4,7 @@ import { PrinterStatus } from './model/printer-status.model';
 import { PrinterService } from './printer.service';
 import { PubSub } from 'graphql-subscriptions';
 import { OnEvent } from '@nestjs/event-emitter';
-import { PrinterFilterInput } from './model/printer-filter.input';
+import { FiltersInput } from 'src/common/filter/filter.input';
 
 @Resolver('Printer')
 export class PrinterResolver {
@@ -12,12 +12,12 @@ export class PrinterResolver {
 
   constructor(private readonly printerService: PrinterService) {}
 
-  @Query(() => [Printer])
-  async getAllPrinter(
-    @Args('filterBy', { nullable: true, type: () => PrinterFilterInput })
-    filterBy?: PrinterFilterInput,
+  @Query(() => [Printer], { name: 'printers' })
+  async getPrinters(
+    @Args({ name: 'filterBy', type: () => FiltersInput, nullable: true })
+    filterBy?: FiltersInput,
   ): Promise<Printer[]> {
-    return await this.printerService.findAll(filterBy);
+    return await this.printerService.findAll(filterBy.filters);
   }
 
   @OnEvent('message.rcvd')

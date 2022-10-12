@@ -46,22 +46,38 @@ type PrintingJobDto {
 type Query {
   getAllHouse: [HouseDto!]!
   getAllDestination: [DestinationDto!]!
-  getAllPrinter(filterBy: PrinterFilterInput): [Printer!]!
+  printers(filterBy: FiltersInput): [Printer!]!
   getAllPrintingJob: [PrintingJobDto!]!
 }
 
-input PrinterFilterInput {
-  id: ID
-  name: String
-  description: String
-  enabled: Boolean
-  activePaperId: Int
-  dataFormat: String
-  location: String
-  model: String
-  serialNumber: String
-  comment: String
-  destinationId: String
+input FiltersInput {
+  filters: [FilterInput!]!
+}
+
+input FilterInput {
+  """Unique name intended as translation key."""
+  name: ID!
+  type: FilterType!
+  values: [FilterValueInput!]!
+}
+
+enum FilterType {
+  Property
+}
+
+input FilterValueInput {
+  """Unique name intended as translation key."""
+  name: ID!
+  type: ScalarType = String
+  value: String!
+}
+
+enum ScalarType {
+  ID
+  Int
+  Float
+  String
+  Boolean
 }
 
 type Subscription {
