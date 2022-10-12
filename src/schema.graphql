@@ -2,12 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type PrinterDto {
+type Printer {
   id: ID!
   name: String!
   description: String!
   enabled: Boolean!
-  activePaperId: Float!
+  activePaperId: Int!
   dataFormat: String!
   location: String!
   model: String!
@@ -16,9 +16,9 @@ type PrinterDto {
   destinationId: String
 }
 
-type PrinterStatusDto {
-  id: ID
-  status: String
+type PrinterStatus {
+  id: ID!
+  status: String!
 }
 
 type HouseDto {
@@ -35,12 +35,35 @@ type DestinationDto {
   location: String!
 }
 
+type PrintingJobDto {
+  id: ID!
+  status: Boolean!
+  timeStarted: String!
+  paperType: String!
+  counter: String!
+}
+
 type Query {
   getAllHouse: [HouseDto!]!
   getAllDestination: [DestinationDto!]!
-  getAllPrinter: [PrinterDto!]!
+  getAllPrinter(filterBy: PrinterFilterInput): [Printer!]!
+  getAllPrintingJob: [PrintingJobDto!]!
+}
+
+input PrinterFilterInput {
+  id: ID
+  name: String
+  description: String
+  enabled: Boolean
+  activePaperId: Int
+  dataFormat: String
+  location: String
+  model: String
+  serialNumber: String
+  comment: String
+  destinationId: String
 }
 
 type Subscription {
-  statusUpdate: PrinterStatusDto!
+  statusUpdate: PrinterStatus!
 }

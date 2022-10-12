@@ -10,28 +10,29 @@ import { MockKafkaModule } from './mock/kafka.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
-	imports: [
-		EventEmitterModule.forRoot(),
-		
-		GraphQLModule.forRootAsync<ApolloDriverConfig>({
-			driver: ApolloDriver,
-			useFactory: () => {
-				return {
-					autoSchemaFile: './src/schema.graphql',
-					//installSubscriptionHandlers: true, //FIXME: outdated nowadays?
-					subscriptions: {
-						'graphql-ws': true,
-						'subscriptions-transport-ws':  true  //needed for backward compatibility in playground
-					}
-				};
-			},
-		}),
-		DatabaseModule,
-		HouseModule,
-		DestinationModule,
-		PrinterModule,
-		MockKafkaModule,
-		PrintingJobModule
-	]
+  imports: [
+    EventEmitterModule.forRoot(),
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      useFactory: () => {
+        return {
+          autoSchemaFile: './src/schema.graphql',
+          // install SubscriptionHandlers: true,
+          // FIXME: outdated nowadays?
+          subscriptions: {
+            'graphql-ws': true,
+            // needed for backward compatibility in playground
+            'subscriptions-transport-ws': true,
+          },
+        };
+      },
+    }),
+    DatabaseModule,
+    HouseModule,
+    DestinationModule,
+    PrinterModule,
+    MockKafkaModule,
+    PrintingJobModule,
+  ],
 })
 export class AppModule {}
