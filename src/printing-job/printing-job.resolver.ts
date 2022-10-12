@@ -7,7 +7,7 @@ export class PrintingJobResolver {
   constructor(private readonly printingJobService: PrintingJobService) {}
 
   @Query(() => [PrintingJobDto])
-  async getAllPrintingJob(): Promise<PrintingJobDto[]> {
-    return await this.printingJobService.getAllPrintingJob();
+  async getAllPrintingJobs(): Promise<PrintingJobDto[]> {
+    return await this.printingJobService.getAllPrintingJobs();
   }
 }

@@ -7,7 +7,7 @@ export class PrinterResolver {
   constructor(private readonly printerService: PrinterService) {}
 
   @Query(() => [PrinterDto])
-  async getAllPrinter(): Promise<PrinterDto[]> {
-    return await this.printerService.getAllPrinter();
+  async getAllPrinters(): Promise<PrinterDto[]> {
+    return await this.printerService.getAllPrinters();
   }
 }

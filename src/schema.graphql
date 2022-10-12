@@ -39,8 +39,8 @@ type PrintingJobDto {
 }
 
 type Query {
-  getAllHouse: [HouseDto!]!
-  getAllDestination: [DestinationDto!]!
-  getAllPrinter: [PrinterDto!]!
-  getAllPrintingJob: [PrintingJobDto!]!
+  getAllHouses: [HouseDto!]!
+  getAllDestinations: [DestinationDto!]!
+  getAllPrinters: [PrinterDto!]!
+  getAllPrintingJobs: [PrintingJobDto!]!
 }

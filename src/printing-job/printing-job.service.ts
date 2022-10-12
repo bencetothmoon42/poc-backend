@@ -10,7 +10,7 @@ export class PrintingJobService {
     private readonly printingJobConverter: PrintingJobConverter,
   ) {}
 
-  async getAllPrintingJob(): Promise<PrintingJobDto[]> {
+  async getAllPrintingJobs(): Promise<PrintingJobDto[]> {
     const printingJobs = await this.database.printingJob.findMany();
     return printingJobs.map((printingJob) =>
       this.printingJobConverter.toPrintingJobDto(printingJob),

@@ -10,7 +10,7 @@ export class PrinterService {
     private readonly printerConverter: PrinterConverter,
   ) {}
 
-  async getAllPrinter(): Promise<PrinterDto[]> {
+  async getAllPrinters(): Promise<PrinterDto[]> {
     const printers = await this.database.printer.findMany();
     return printers.map((printer) =>
       this.printerConverter.toPrinterDto(printer),
