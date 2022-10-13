@@ -58,27 +58,15 @@ input FilterInput {
   """Unique name intended as translation key."""
   name: ID!
   type: FilterType!
-  values: [FilterValueInput!]!
+  values: [FilterValue!]!
 }
 
 enum FilterType {
-  Property
+  MultiSelect
 }
 
-input FilterValueInput {
-  """Unique name intended as translation key."""
-  name: ID!
-  type: ScalarType = String
-  value: String!
-}
-
-enum ScalarType {
-  ID
-  Int
-  Float
-  String
-  Boolean
-}
+"""Custom filter value type"""
+scalar FilterValue
 
 type Subscription {
   statusUpdate: PrinterStatus!

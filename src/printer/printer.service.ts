@@ -2,14 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { FilterInput, FilterType } from 'src/common/filter/filter.input';
 import { DatabaseService } from 'src/database/database.service';
 import { Printer } from './model/printer.model';
-import { FilterService } from 'src/common/filter/filter.service';
 
 @Injectable()
 export class PrinterService {
-  constructor(
-    private readonly database: DatabaseService,
-    private readonly filterService: FilterService,
-  ) {}
+  constructor(private readonly database: DatabaseService) {}
 
   async findAll(filters: FilterInput[] = []): Promise<Printer[]> {
     if (filters.length === 0) {
@@ -19,11 +15,9 @@ export class PrinterService {
     const conditions = [];
 
     for (const filter of filters) {
-      if (filter.type === FilterType.Property) {
+      if (filter.type === FilterType.MultiSelect) {
         for (const value of filter.values) {
-          conditions.push({
-            [filter.name]: { equals: this.filterService.parse(value) },
-          });
+          conditions.push({ [filter.name]: { equals: value } });
         }
       }
     }

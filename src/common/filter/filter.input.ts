@@ -1,19 +1,5 @@
 import { Field, ID, InputType, registerEnumType } from '@nestjs/graphql';
-import { ScalarType } from './scalar-type';
-
-@InputType()
-export class FilterValueInput {
-  @Field(() => ID, { description: 'Unique name intended as translation key.' })
-  name: string;
-
-  // We need to explicitly send the value type because GraphQL does not support
-  // a Scalar union type that would be the ideal type for the value field.
-  @Field(() => ScalarType, { defaultValue: ScalarType.String })
-  type: ScalarType;
-
-  @Field()
-  value: string;
-}
+import { FilterValue, FilterValueScalar } from './filter-value.scalar';
 
 @InputType()
 export class FilterInput {
@@ -23,8 +9,8 @@ export class FilterInput {
   @Field(() => FilterType)
   type: FilterType;
 
-  @Field(() => [FilterValueInput])
-  values: FilterValueInput[];
+  @Field(() => [FilterValueScalar])
+  values: FilterValue[];
 }
 
 @InputType()
@@ -34,7 +20,7 @@ export class FiltersInput {
 }
 
 export enum FilterType {
-  Property = 'Property',
+  MultiSelect = 'MultiSelect',
 }
 
 registerEnumType(FilterType, { name: 'FilterType' });

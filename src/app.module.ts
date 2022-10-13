@@ -8,23 +8,21 @@ import { DestinationModule } from './destination/destination.module';
 import { PrintingJobModule } from './printing-job/printing-job.module';
 import { MockKafkaModule } from './mock/kafka.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { resolvers } from './common/resolvers';
 
 @Module({
   imports: [
     EventEmitterModule.forRoot(),
-    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      useFactory: () => {
-        return {
-          autoSchemaFile: './src/schema.graphql',
-          // install SubscriptionHandlers: true,
-          // FIXME: outdated nowadays?
-          subscriptions: {
-            'graphql-ws': true,
-            // needed for backward compatibility in playground
-            'subscriptions-transport-ws': true,
-          },
-        };
+      resolvers,
+      autoSchemaFile: './src/schema.graphql',
+      // install SubscriptionHandlers: true,
+      // FIXME: outdated nowadays?
+      subscriptions: {
+        'graphql-ws': true,
+        // needed for backward compatibility in playground
+        'subscriptions-transport-ws': true,
       },
     }),
     DatabaseModule,
