@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FilterInput, FilterType } from 'src/common/filter/filter.input';
+import { FilterInput } from 'src/common/filter/filter.input';
 import { DatabaseService } from 'src/database/database.service';
 import { Printer } from './model/printer.model';
 
@@ -15,10 +15,8 @@ export class PrinterService {
     const conditions = [];
 
     for (const filter of filters) {
-      if (filter.type === FilterType.MultiSelect) {
-        for (const value of filter.values) {
-          conditions.push({ [filter.name]: { equals: value } });
-        }
+      for (const value of filter.values) {
+        conditions.push({ [filter.name]: { equals: value } });
       }
     }
 

@@ -9,6 +9,7 @@ import { PrintingJobModule } from './printing-job/printing-job.module';
 import { MockKafkaModule } from './mock/kafka.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { resolvers } from './common/resolvers';
+import { FilterModule } from './filter/filter.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { resolvers } from './common/resolvers';
     HouseModule,
     DestinationModule,
     PrinterModule,
+    FilterModule,
     MockKafkaModule,
     PrintingJobModule,
   ],

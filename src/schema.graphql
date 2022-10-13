@@ -43,10 +43,31 @@ type PrintingJobDto {
   counter: String!
 }
 
+type FilterValueItem {
+  """Unique name intended as translation key."""
+  name: ID!
+  value: FilterValue!
+}
+
+"""Custom filter value type"""
+scalar FilterValue
+
+type Filter {
+  """Unique name intended as translation key."""
+  name: ID!
+  filterType: FilterType!
+  values: [FilterValueItem!]!
+}
+
+enum FilterType {
+  MultiSelect
+}
+
 type Query {
   getAllHouse: [HouseDto!]!
   getAllDestination: [DestinationDto!]!
   printers(filterBy: FiltersInput): [Printer!]!
+  filters(collection: Collection): [Filter!]!
   getAllPrintingJob: [PrintingJobDto!]!
 }
 
@@ -57,16 +78,12 @@ input FiltersInput {
 input FilterInput {
   """Unique name intended as translation key."""
   name: ID!
-  type: FilterType!
   values: [FilterValue!]!
 }
 
-enum FilterType {
-  MultiSelect
+enum Collection {
+  Printer
 }
-
-"""Custom filter value type"""
-scalar FilterValue
 
 type Subscription {
   statusUpdate: PrinterStatus!
