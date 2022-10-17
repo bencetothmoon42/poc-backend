@@ -16,6 +16,11 @@ type PrinterDto {
   destinationId: String
 }
 
+type PrinterStatusDto {
+  id: ID
+  status: String
+}
+
 type HouseDto {
   id: ID!
   name: String!
@@ -30,17 +35,19 @@ type DestinationDto {
   location: String!
 }
 
-type PrintingJobDto {
-  id: ID!
-  status: Boolean!
-  timeStarted: String!
-  paperType: String!
-  counter: String!
-}
-
 type Query {
+<<<<<<< HEAD
   getAllHouses: [HouseDto!]!
   getAllDestinations: [DestinationDto!]!
   getAllPrinters: [PrinterDto!]!
   getAllPrintingJobs: [PrintingJobDto!]!
+=======
+  getAllHouse: [HouseDto!]!
+  getAllDestination: [DestinationDto!]!
+  getAllPrinter: [PrinterDto!]!
+}
+
+type Subscription {
+  statusUpdate: PrinterStatusDto!
+>>>>>>> main
 }
