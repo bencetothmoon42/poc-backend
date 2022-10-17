@@ -2,12 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type PrinterDto {
+type Printer {
   id: ID!
   name: String!
   description: String!
   enabled: Boolean!
-  activePaperId: Float!
+  activePaperId: Int!
   dataFormat: String!
   location: String!
   model: String!
@@ -16,9 +16,9 @@ type PrinterDto {
   destinationId: String
 }
 
-type PrinterStatusDto {
-  id: ID
-  status: String
+type PrinterStatus {
+  id: ID!
+  status: String!
 }
 
 type HouseDto {
@@ -35,12 +35,56 @@ type DestinationDto {
   location: String!
 }
 
+type PrintingJobDto {
+  id: ID!
+  status: Boolean!
+  timeStarted: String!
+  paperType: String!
+  counter: String!
+}
+
+type FilterValueItem {
+  """Unique name intended as translation key."""
+  name: ID!
+  value: FilterValue!
+}
+
+"""Custom filter value type"""
+scalar FilterValue
+
+type Filter {
+  """Unique name intended as translation key."""
+  name: ID!
+  filterType: FilterType!
+  values: [FilterValueItem!]!
+}
+
+enum FilterType {
+  MultiSelect
+}
+
 type Query {
   getAllHouse: [HouseDto!]!
   getAllDestination: [DestinationDto!]!
-  getAllPrinter: [PrinterDto!]!
+  printers(filterBy: FiltersInput): [Printer!]!
+  filters(collection: Collection): [Filter!]!
+  getAllPrintingJob: [PrintingJobDto!]!
+}
+
+input FiltersInput {
+  filters: [FilterInput!]!
+}
+
+input FilterInput {
+  """Unique name intended as translation key."""
+  name: ID!
+  values: [FilterValue!]!
+}
+
+enum Collection {
+  Printer
 }
 
 type Subscription {
-  statusUpdate: PrinterStatusDto!
+  statusUpdate: PrinterStatus!
 }
