@@ -1,20 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { FilterInput } from 'src/common/filter/filter.input';
 import { DatabaseService } from 'src/database/database.service';
-import { PrinterDto } from './dto/printer.dto';
-import { PrinterConverter } from './printer.converter';
-
+import { Printer } from './model/printer.model';
 
 @Injectable()
 export class PrinterService {
-  constructor(
-    private readonly database: DatabaseService,
-    private readonly printerConverter: PrinterConverter,
-  ) {}
+  constructor(private readonly database: DatabaseService) {}
 
-  async getAllPrinters(): Promise<PrinterDto[]> {
-    const printers = await this.database.printer.findMany();
-    return printers.map((printer) =>
-      this.printerConverter.toPrinterDto(printer),
-    );
+  async findAll(filters: FilterInput[] = []): Promise<Printer[]> {
+    if (filters.length === 0) {
+      return this.database.printer.findMany();
+    }
+
+    const conditions = [];
+
+    for (const filter of filters) {
+      for (const value of filter.values) {
+        conditions.push({ [filter.name]: { equals: value } });
+      }
+    }
+
+    return this.database.printer.findMany({ where: { AND: conditions } });
   }
 }

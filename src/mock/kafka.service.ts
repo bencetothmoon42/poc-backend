@@ -1,6 +1,6 @@
 import { Logger, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { PrinterStatusDto } from 'src/printer/dto/printerStatus.dto';
+import { PrinterStatus } from 'src/printer/model/printer-status.model';
 
 import * as crypto from 'crypto';
 
@@ -20,13 +20,13 @@ export class MockKafkaService {
     this.run();
   }
 
-  consume(msg: PrinterStatusDto) {
+  consume(msg: PrinterStatus) {
     this.eventEmitter.emit('message.rcvd', msg);
   }
 
-  async *printerStatus(): AsyncGenerator<PrinterStatusDto, void> {
+  async *printerStatus(): AsyncGenerator<PrinterStatus, void> {
     while (this.running) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 10000));
       yield { id: crypto.randomUUID(), status: 'ok' };
     }
   }

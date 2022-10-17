@@ -12,22 +12,23 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { MockKafkaModule } from './mock/kafka.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { resolvers } from './common/resolvers';
+import { FilterModule } from './filter/filter.module';
 
 @Module({
   imports: [
     EventEmitterModule.forRoot(),
 
-    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      useFactory: () => {
-        return {
-          autoSchemaFile: './src/schema.graphql',
-          //installSubscriptionHandlers: true, //FIXME: outdated nowadays?
-          subscriptions: {
-            'graphql-ws': true,
-            'subscriptions-transport-ws': true, //needed for backward compatibility in playground
-          },
-        };
+      resolvers,
+      autoSchemaFile: './src/schema.graphql',
+      // install SubscriptionHandlers: true,
+      // FIXME: outdated nowadays?
+      subscriptions: {
+        'graphql-ws': true,
+        // needed for backward compatibility in playground
+        'subscriptions-transport-ws': true,
       },
     }),
     DatabaseModule,
@@ -37,6 +38,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     PrintingJobModule,
     LoginModule,
     MockKafkaModule,
+    FilterModule,
   ],
   providers: [
     {
