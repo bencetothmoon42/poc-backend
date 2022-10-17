@@ -17,7 +17,7 @@ export class PrinterResolver {
     @Args({ name: 'filterBy', type: () => FiltersInput, nullable: true })
     filterBy?: FiltersInput,
   ): Promise<Printer[]> {
-    return await this.printerService.findAll(filterBy.filters);
+    return await this.printerService.findAll(filterBy?.filters);
   }
 
   @OnEvent('message.rcvd')
