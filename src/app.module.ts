@@ -6,7 +6,6 @@ import { PrinterModule } from './printer/printer.module';
 import { HouseModule } from './house/house.module';
 import { DestinationModule } from './destination/destination.module';
 import { PrintingJobModule } from './printing-job/printing-job.module';
-import { LoginModule } from './auth/login/login.module';
 import { PermissionsGuard } from './auth/guards/permissions.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/roles.guard';
@@ -14,15 +13,20 @@ import { MockKafkaModule } from './mock/kafka.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { resolvers } from './common/resolvers';
 import { FilterModule } from './filter/filter.module';
+import { LoginGuard } from './auth/guards/login.guard';
+import { AuthModule } from './auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    PassportModule,
     EventEmitterModule.forRoot(),
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       resolvers,
       autoSchemaFile: './src/schema.graphql',
+      context: ({ req, res }) => ({ req, res }),
       // install SubscriptionHandlers: true,
       // FIXME: outdated nowadays?
       subscriptions: {
@@ -36,9 +40,9 @@ import { FilterModule } from './filter/filter.module';
     DestinationModule,
     PrinterModule,
     PrintingJobModule,
-    LoginModule,
     MockKafkaModule,
     FilterModule,
+    AuthModule,
   ],
   providers: [
     {
@@ -48,6 +52,10 @@ import { FilterModule } from './filter/filter.module';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: LoginGuard,
     },
   ],
 })
