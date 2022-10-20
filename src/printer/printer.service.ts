@@ -20,6 +20,6 @@ export class PrinterService {
       }
     }
 
-    return this.database.printer.findMany({ where: { AND: conditions } });
+    return this.database.printer.findMany({ where: { OR: conditions } });
   }
 }

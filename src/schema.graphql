@@ -64,17 +64,11 @@ enum FilterType {
 }
 
 type Query {
-<<<<<<< HEAD
   getAllHouses: [HouseDto!]!
   getAllDestinations: [DestinationDto!]!
-  getAllPrinters: [PrinterDto!]!
-  getAllPrintingJobs: [PrintingJobDto!]!
-=======
-  getAllHouse: [HouseDto!]!
-  getAllDestination: [DestinationDto!]!
   printers(filterBy: FiltersInput): [Printer!]!
+  getAllPrintingJobs: [PrintingJobDto!]!
   filters(collection: Collection): [Filter!]!
-  getAllPrintingJob: [PrintingJobDto!]!
 }
 
 input FiltersInput {
@@ -92,10 +86,5 @@ enum Collection {
 }
 
 type Subscription {
-<<<<<<< HEAD
-  statusUpdate: PrinterStatusDto!
->>>>>>> main
-=======
   statusUpdate: PrinterStatus!
->>>>>>> main
 }

@@ -12,12 +12,12 @@ const mockFilters = {
       ],
     },
     {
-      name: 'paperType',
+      name: 'activePaperId',
       filterType: FilterType.MultiSelect,
       values: [
-        { name: 'sticky', value: 'sticky' },
-        { name: 'label', value: 'label' },
-        { name: 'instruction', value: 'instruction' },
+        { name: 'sticky', value: 0 },
+        { name: 'instruction', value: 1 },
+        { name: 'label', value: 2 },
       ],
     },
   ],
