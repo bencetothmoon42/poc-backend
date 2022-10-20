@@ -1,0 +1,15 @@
+* frontend
+** TODO [#A] floating DESTINATION/SHOP PALACE
+** TODO [#A] new printers columns: NAME, Papertype, serial, enabled
+** TODO [#B] localization
+** TODO [#A] JWT Guard -> /login
+** TODO [#A] JWT Token Contents: secret in config (for signature), payload: Github login, id, avatar_url
+** TODO [#C]  KafkaUpdates
+
+* Backend
+** TODO [#A] Get data from CAS
+** TODO [#A] Update CAS GraphQL Entities
+** TODO [#B] JWT GraphqlGuard
+** TODO [#B] CAS for all entities (printers)
+** [#A] master->main
+** credentials
